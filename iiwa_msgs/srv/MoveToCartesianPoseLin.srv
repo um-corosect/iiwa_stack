@@ -1,0 +1,5 @@
+bool blocking
+float32 relative_speed
+CartesianPose cartesian_pose
+---
+bool success
