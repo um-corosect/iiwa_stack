@@ -28,6 +28,9 @@
     <material name="White">
         <color rgba="1.0 1.0 1.0 1.0" />
     </material>
+    <material name="Opaque">
+        <color rgba="1.0 1.0 1.0 0.8" />
+    </material>
     <material name="zed_mat">
         <color rgba="0.8 0.8 0.8 0.8" />
     </material>
@@ -44,6 +47,26 @@
   <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" /> -->
     <!-- Fix to world just for testing -->
     <link name="base_link" />
+    <joint name="ceiling_base" type="fixed">
+        <parent link="base_link" />
+        <child link="ceiling" />
+        <origin rpy="0 0 0" xyz="0.0 0.0 2.2" />
+    </joint>
+    <link name="ceiling">
+        <!-- <visual>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <box size="10.0 10.0 0.001" />
+            </geometry>
+            <material name="Opaque" />
+        </visual> -->
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <box size="10.0 10.0 0.001" />
+            </geometry>
+        </collision>
+    </link>
     <joint name="base_link_m_robot_joint1" type="fixed">
         <origin rpy="0 0 0" xyz="0 0 0" />
         <parent link="base_link" />
@@ -53,14 +76,14 @@
         <visual>
             <origin rpy="0 0 3.14159" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/Support Structure/Low_Res_Lowered_Robot_Cell.stl" />
+                <mesh filename="package://iiwa_description/meshes/Support Structure/Low_Res_SUPAHIGH_Robot_Cell_ICF.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
         <collision>
             <origin rpy="0 0 3.14159" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/Support Structure/Low_Res_Lowered_Robot_Cell.stl" />
+                <mesh filename="package://iiwa_description/meshes/Support Structure/Low_Res_SUPAHIGH_Robot_Cell_ICF.stl" />
             </geometry>
             <material name="Grey" />
         </collision>
@@ -72,7 +95,7 @@
     </link>
     <!--joint between {parent} and link_0-->
     <joint name="m_robot_support_structure_m_robot_joint" type="fixed">
-        <origin rpy="0 0 1.5707963267948966" xyz="0 -1.05 0.51" />
+        <origin rpy="0 0 1.5707963267948966" xyz="0 -1.05 0.885" />
         <parent link="m_robot_support_structure" />
         <child link="m_robot_link_0" />
     </joint>
@@ -140,7 +163,7 @@
         <child link="m_robot_link_2" />
         <origin rpy="1.5707963267948966   0 3.141592653589793" xyz="0 0 0.2025" />
         <axis xyz="0 0 1" />
-        <limit effort="300" lower="-2.0943951023931953" upper="2.0943951023931953" velocity="10" />
+        <limit effort="300" lower="-2.00713" upper="2.00713" velocity="10" />
         <safety_controller k_position="100" k_velocity="2" soft_lower_limit="-2.0594885173533086" soft_upper_limit="2.0594885173533086" />
         <dynamics damping="0.5" />
     </joint>
@@ -202,7 +225,7 @@
         <child link="m_robot_link_4" />
         <origin rpy="1.5707963267948966 0 0" xyz="0 0 0.2155" />
         <axis xyz="0 0 1" />
-        <limit effort="300" lower="-2.0943951023931953" upper="2.0943951023931953" velocity="10" />
+        <limit effort="300" lower="-2.00713" upper="2.00713" velocity="10" />
         <safety_controller k_position="100" k_velocity="2" soft_lower_limit="-2.0594885173533086" soft_upper_limit="2.0594885173533086" />
         <dynamics damping="0.5" />
     </joint>
@@ -264,7 +287,7 @@
         <child link="m_robot_link_6" />
         <origin rpy="1.5707963267948966 0 0" xyz="0 0 0.2155" />
         <axis xyz="0 0 1" />
-        <limit effort="300" lower="-2.0943951023931953" upper="2.0943951023931953" velocity="10" />
+        <limit effort="300" lower="-2.00713" upper="1.91986" velocity="10" />
         <safety_controller k_position="100" k_velocity="2" soft_lower_limit="-2.0094885173533086" soft_upper_limit="2.0094885173533086" />
         <dynamics damping="0.5" />
     </joint>
@@ -499,10 +522,10 @@
         </collision>
     </link>
     <joint name="m_robot_linear_drive_guiderail_sledge_joint" type="prismatic">
-        <origin rpy="0 0 0" xyz="0 0.08 0.0413" />
+        <origin rpy="0 0 0" xyz="0 0.15 0.0413" />
         <parent link="m_robot_linear_drive_guiderail" />
         <child link="m_robot_linear_drive_sledge" />
-        <limit effort="1" lower="0.0" upper="0.33" velocity="0.95" />
+        <limit effort="1" lower="0.0" upper="0.25" velocity="0.95" />
         <axis xyz="0 1 0" />
     </joint>
     <link name="m_robot_linear_drive_sledge">
@@ -558,7 +581,7 @@
         <parent link="m_robot_linear_drive_dof1" />
         <child link="m_robot_linear_drive_dof2" />
         <axis xyz="1 0 0" />
-        <limit effort="1" lower="-1.4" upper="-0.15" velocity="0.95" />
+        <limit effort="1" lower="-1.571" upper="0.0" velocity="0.95" />
     </joint>
     <link name="m_robot_linear_drive_dof2">
         <inertial>
@@ -644,7 +667,7 @@
     </transmission>
     <!--joint between {parent} and link_0-->
     <joint name="m_robot_linear_drive_link_ee_Soft_RG6_joint" type="fixed">
-        <origin rpy="0 1.571 -1.571" xyz="-0.0035 0.4 0.0" />
+        <origin rpy="0 1.571 -1.571" xyz="-0.0035 0.4 -0.005" />
         <parent link="m_robot_linear_drive_link_ee" />
         <child link="Soft_RG6_link_0" />
     </joint>

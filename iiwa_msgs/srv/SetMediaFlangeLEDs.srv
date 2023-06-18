@@ -1,0 +1,5 @@
+float32 red_frequency
+float32 green_frequency
+float32 blue_frequency
+---
+bool success

@@ -1,0 +1,7 @@
+std_msgs/Header header
+int32 emergency_stop_internal
+int32 emergency_stop_external
+int32 safety_stop_signal
+int32 operation_mode
+int32 operator_safety_state
+int32 enabling_device_state 
