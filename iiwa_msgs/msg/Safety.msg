@@ -3,7 +3,7 @@ std_msgs/Header header
 # KUKA Emergency Stop States
 int32 EMERGENCY_STOP_ACTIVE=2
 int32 EMERGENCY_STOP_INACTIVE=1
-int32 EMERGENCY_STOP_NOT_CONFINGURED=0
+int32 EMERGENCY_STOP_NOT_CONFIGURED=0
 
 int32 emergency_stop_internal
 int32 emergency_stop_external
