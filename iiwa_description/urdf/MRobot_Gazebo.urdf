@@ -31,35 +31,19 @@
     <material name="Opaque">
         <color rgba="1.0 1.0 1.0 0.8" />
     </material>
-    <material name="zed_mat">
-        <color rgba="0.8 0.8 0.8 0.8" />
-    </material>
-    <material name="zedm_mat">
-        <color rgba="0 0 0 0.9" />
-    </material>
-    <material name="zed2_mat">
-        <color rgba="0.25 0.25 0.25 0.99" />
-    </material>
-    <material name="zed2i_mat">
+    <material name="camera_mat">
         <color rgba="0.25 0.25 0.25 0.99" />
     </material>
     <!--Import the realsense
   <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" /> -->
     <!-- Fix to world just for testing -->
     <link name="base_link" />
-    <joint name="ceiling_base" type="fixed">
+    <joint name="artificial_ceiling_to_base" type="fixed">
         <parent link="base_link" />
-        <child link="ceiling" />
+        <child link="artificial_ceiling" />
         <origin rpy="0 0 0" xyz="0.0 0.0 2.2" />
     </joint>
-    <link name="ceiling">
-        <!-- <visual>
-            <origin rpy="0 0 0" xyz="0 0 0" />
-            <geometry>
-                <box size="10.0 10.0 0.001" />
-            </geometry>
-            <material name="Opaque" />
-        </visual> -->
+    <link name="artificial_ceiling">
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
@@ -67,23 +51,25 @@
             </geometry>
         </collision>
     </link>
+     <!--joint between base link and the support structure-->
     <joint name="base_link_m_robot_joint1" type="fixed">
         <origin rpy="0 0 0" xyz="0 0 0" />
         <parent link="base_link" />
         <child link="m_robot_support_structure" />
     </joint>
+     <!--support structure definition-->
     <link name="m_robot_support_structure">
         <visual>
             <origin rpy="0 0 3.14159" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/Support Structure/Low_Res_SUPAHIGH_Robot_Cell_ICF.stl" />
+                <mesh filename="package://iiwa_description/meshes/Support Structure/Low_Res_Robot_Cell_Nasekomo.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
         <collision>
             <origin rpy="0 0 3.14159" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/Support Structure/Low_Res_SUPAHIGH_Robot_Cell_ICF.stl" />
+                <mesh filename="package://iiwa_description/meshes/Support Structure/Low_Res_Robot_Cell_Nasekomo.stl" />
             </geometry>
             <material name="Grey" />
         </collision>
@@ -95,7 +81,7 @@
     </link>
     <!--joint between {parent} and link_0-->
     <joint name="m_robot_support_structure_m_robot_joint" type="fixed">
-        <origin rpy="0 0 1.5707963267948966" xyz="0 -1.05 0.885" />
+        <origin rpy="0 0 0" xyz="0 -1.05 0.885" />
         <parent link="m_robot_support_structure" />
         <child link="m_robot_link_0" />
     </joint>
@@ -496,7 +482,7 @@
         </actuator>
     </transmission>
     <joint name="m_robot_link_ee_m_robot_joint_ee" type="fixed">
-        <origin rpy="0 0 1.5707963267948966" xyz="0.08 0 0.08" />
+        <origin rpy="3.14159 0 1.5707963267948966" xyz="0.07 0 0.043" />
         <parent link="m_robot_link_ee" />
         <child link="m_robot_linear_drive_guiderail" />
     </joint>
@@ -509,23 +495,23 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/lower_quality_linear_drive/Guide_Rail_v63_true_scale.stl" />
+                <mesh filename="package://iiwa_description/meshes/Linear Drive Sept2023/Guide Rail.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
-        <collision>
+        <collision>d
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/lower_quality_linear_drive/Guide_Rail_v63_true_scale.stl" />
+                <mesh filename="package://iiwa_description/meshes/Linear Drive Sept2023/Guide Rail.stl" />
             </geometry>
             <material name="Grey" />
         </collision>
     </link>
     <joint name="m_robot_linear_drive_guiderail_sledge_joint" type="prismatic">
-        <origin rpy="0 0 0" xyz="0 0.15 0.0413" />
+        <origin rpy="0 0 3.14159" xyz="0 -0.12 -0.022" />
         <parent link="m_robot_linear_drive_guiderail" />
         <child link="m_robot_linear_drive_sledge" />
-        <limit effort="1" lower="0.0" upper="0.25" velocity="0.95" />
+        <limit effort="1" lower="0.0" upper="0.33" velocity="0.3" />
         <axis xyz="0 1 0" />
     </joint>
     <link name="m_robot_linear_drive_sledge">
@@ -537,19 +523,19 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/lower_quality_linear_drive/Sledge_v56_true_scale_lower_low.stl" />
+                <mesh filename="package://iiwa_description/meshes/Linear Drive Sept2023/Sledge Assembly.stl" />
             </geometry>
             <material name="Orange" />
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/lower_quality_linear_drive/Sledge_v56_true_scale_lower_low.stl" />
+                <mesh filename="package://iiwa_description/meshes/Linear Drive Sept2023/Sledge Assembly.stl" />
             </geometry>
         </collision>
     </link>
     <joint name="m_robot_linear_drive_sledge_dof1_joint" type="revolute">
-        <origin rpy="0 0 3.1415" xyz="0 0 0" />
+        <origin rpy="0 0 0" xyz="0 0 -0.015" />
         <parent link="m_robot_linear_drive_sledge" />
         <child link="m_robot_linear_drive_dof1" />
         <axis xyz="0 0 1" />
@@ -557,27 +543,27 @@
     </joint>
     <link name="m_robot_linear_drive_dof1">
         <inertial>
-            <origin rpy="0 0 0" xyz="-0.09 -0.003 0.055" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
             <mass value="0.01" />
             <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
         </inertial>
         <visual>
-            <origin rpy="0 0 0" xyz="-0.09 -0.003 0.055" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/lower_quality_linear_drive/2_DOF_v85_true_scale_lower_low.stl" />
+                <mesh filename="package://iiwa_description/meshes/Linear Drive Sept2023/2 DOF.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
         <collision>
-            <origin rpy="0 0 0" xyz="-0.09 -0.003 0.055" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/lower_quality_linear_drive/2_DOF_v85_true_scale_lower_low.stl" />
+                <mesh filename="package://iiwa_description/meshes/Linear Drive Sept2023/2 DOF.stl" />
             </geometry>
             <material name="Grey" />
         </collision>
     </link>
     <joint name="m_robot_linear_drive_dof1_dof2_joint" type="revolute">
-        <origin rpy="0 0 0" xyz="-0.02 0.005 0.074" />
+        <origin rpy="0 0 0" xyz="0 0 -0.071" />
         <parent link="m_robot_linear_drive_dof1" />
         <child link="m_robot_linear_drive_dof2" />
         <axis xyz="1 0 0" />
@@ -585,21 +571,21 @@
     </joint>
     <link name="m_robot_linear_drive_dof2">
         <inertial>
-            <origin rpy="0 0 -1.5707963267948966" xyz="0 0.01 0.005" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
             <mass value="0.01" />
             <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001" />
         </inertial>
         <visual>
-            <origin rpy="0 0 -1.5707963267948966" xyz="0 0.01 0.005" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/lower_quality_linear_drive/3_DOF_v36_true_scale_lower_low.stl" />
+                <mesh filename="package://iiwa_description/meshes/Linear Drive Sept2023/3DOF.stl" />
             </geometry>
             <material name="Grey" />
         </visual>
         <collision>
-            <origin rpy="0 0 -1.5707963267948966" xyz="0 0.01 0.005" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/lower_quality_linear_drive/3_DOF_v36_true_scale_lower_low.stl" />
+                <mesh filename="package://iiwa_description/meshes/Linear Drive Sept2023/3DOF.stl" />
             </geometry>
             <material name="Grey" />
         </collision>
@@ -607,7 +593,7 @@
     <joint name="m_robot_linear_drive_joint_ee" type="fixed">
         <parent link="m_robot_linear_drive_dof2" />
         <child link="m_robot_linear_drive_link_ee" />
-        <origin rpy="0 0 0" xyz="0.02 -0.32 0.08" />
+        <origin rpy="0 0 0" xyz="0 0.32 -0.0625" />
     </joint>
     <link name="m_robot_linear_drive_link_ee">
         <visual>
@@ -618,20 +604,7 @@
             <material name="Grey" />
         </visual>
     </link>
-    <!-- <link name="m_robot_grasping_point_mtc">
-        <visual>
-            <origin rpy="0 0 0" xyz="0 0 0" />
-            <geometry>
-                <box size="0.01 0.01 0.01" />
-            </geometry>
-            <material name="Grey" />
-        </visual>
-    </link>
-    <joint name="m_robot_linear_drive_link_ee_grasping_point" type='fixed'>
-        <parent link="m_robot_linear_drive_dof2"/>
-        <child link="m_robot_grasping_point_mtc"/>
-        <origin rpy="0 0 0" xyz="0.02 0 0.425" />
-    </joint> -->
+
     <transmission name="m_robot_linear_drive_guiderail_sledge_tran">
         <robotNamespace>/m_robot</robotNamespace>
         <type>transmission_interface/SimpleTransmission</type>
@@ -667,7 +640,7 @@
     </transmission>
     <!--joint between {parent} and link_0-->
     <joint name="m_robot_linear_drive_link_ee_Soft_RG6_joint" type="fixed">
-        <origin rpy="0 1.571 -1.571" xyz="-0.0035 0.4 -0.005" />
+        <origin rpy="3.14159 1.571 -1.571" xyz="0 -0.385 0" />
         <parent link="m_robot_linear_drive_link_ee" />
         <child link="Soft_RG6_link_0" />
     </joint>
@@ -856,24 +829,17 @@
     <origin xyz="$(arg realsense_origin_xyz)" rpy="$(arg realsense_origin_rpy)"/>
   </xacro:sensor_d435>-->
     <!-- Camera mounting point (the threaded screw hole in the bottom) -->
-    <link name="zed2i_base_link" />
-    <joint name="zed2i_base_joint" type="fixed">
-        <parent link="m_robot_support_structure" />
-        <child link="zed2i_base_link" />
-        <origin rpy="0 1.5707963267948966 1.5707963267948966" xyz="-0.06 1.19 2.33" />
-    </joint>
-    <!-- Camera Center -->
-    <link name="zed2i_camera_center">
+
+    <link name="realsense_base_link" >
         <visual>
-            <origin rpy="0 0 0" xyz="-0.01 0 0" />
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/zed2i/zed2i.stl" />
+                <mesh filename="package://iiwa_description/meshes/RealSense D435/d435.dae" />
             </geometry>
-            <material name="zed2i_mat" />
+            <material name="camera_mat" />
         </visual>
         <collision>
             <geometry>
-                <mesh filename="package://iiwa_description/meshes/zed2i/zed2i.stl" />
+                <mesh filename="package://iiwa_description/meshes/RealSense D435/d435.dae" />
             </geometry>
         </collision>
         <inertial>
@@ -882,59 +848,9 @@
             <inertia ixx="0.03" iyy="0.03" izz="0.03" ixy="0.0" ixz="0.0" iyz="0.0" />
         </inertial>
     </link>
-    <joint name="zed2i_camera_center_joint" type="fixed">
-        <parent link="zed2i_base_link" />
-        <child link="zed2i_camera_center" />
-        <origin rpy="0 0.0 0" xyz="0 0 0.015" />
-    </joint>
-    <!-- Left Camera -->
-    <link name="zed2i_left_camera_frame" />
-    <joint name="zed2i_left_camera_joint" type="fixed">
-        <parent link="zed2i_camera_center" />
-        <child link="zed2i_left_camera_frame" />
-        <origin rpy="0 0 0" xyz="0 0.06 0" />
-    </joint>
-    <link name="zed2i_left_camera_optical_frame" />
-    <joint name="zed2i_left_camera_optical_joint" type="fixed">
-        <origin rpy="-1.5707963267948966 0.0 -1.5707963267948966" xyz="-0.01 0 0" />
-        <parent link="zed2i_left_camera_frame" />
-        <child link="zed2i_left_camera_optical_frame" />
-    </joint>
-    <!-- Right Camera -->
-    <link name="zed2i_right_camera_frame" />
-    <joint name="zed2i_right_camera_joint" type="fixed">
-        <parent link="zed2i_camera_center" />
-        <child link="zed2i_right_camera_frame" />
-        <origin rpy="0 0 0" xyz="0 -0.06 0" />
-    </joint>
-    <link name="zed2i_right_camera_optical_frame" />
-    <joint name="zed2i_right_camera_optical_joint" type="fixed">
-        <origin rpy="-1.5707963267948966 0.0 -1.5707963267948966" xyz="-0.01 0 0" />
-        <parent link="zed2i_right_camera_frame" />
-        <child link="zed2i_right_camera_optical_frame" />
-    </joint>
-    <link name="zed2i_mag_link" />
-    <joint name="zed2i_mag_joint" type="fixed">
-        <parent link="zed2i_camera_center" />
-        <child link="zed2i_mag_link" />
-        <origin rpy="0 0 0" xyz="0 0 0" />
-    </joint>
-    <link name="zed2i_baro_link" />
-    <joint name="zed2i_baro_joint" type="fixed">
-        <parent link="zed2i_camera_center" />
-        <child link="zed2i_baro_link" />
-        <origin rpy="0 0 0" xyz="0 0 0" />
-    </joint>
-    <link name="zed2i_temp_left_link" />
-    <joint name="zed2i_temp_left_joint" type="fixed">
-        <parent link="zed2i_left_camera_frame" />
-        <child link="zed2i_temp_left_link" />
-        <origin rpy="0 0 0" xyz="0 0 0" />
-    </joint>
-    <link name="zed2i_temp_right_link" />
-    <joint name="zed2i_temp_right_joint" type="fixed">
-        <parent link="zed2i_right_camera_frame" />
-        <child link="zed2i_temp_right_link" />
-        <origin rpy="0 0 0" xyz="0 0 0" />
+    <joint name="realsense_base_joint" type="fixed">
+        <parent link="Soft_RG6_finger_2" />
+        <child link="realsense_base_link" />
+        <origin rpy="0 0 -1.57" xyz="0 0.05 0.1" />
     </joint>
 </robot>
