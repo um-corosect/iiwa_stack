@@ -34,3 +34,12 @@ int32 ENABLING_DEVICE_HANDGUIDING=2 # Enabling deivce for handguiding is pressed
 int32 enabling_device_state 
 
 
+# KUKA App State
+int32 APP_STATE_UNKNOWN=-1
+int32 APP_STATE_STOPPING=0
+int32 APP_STATE_MOTION_PAUSING=1
+int32 APP_STATE_REPOSITIONING=2
+int32 APP_STATE_RESUMING=3
+int32 application_state
+
+
