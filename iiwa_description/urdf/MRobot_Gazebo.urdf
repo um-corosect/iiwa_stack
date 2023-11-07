@@ -41,7 +41,7 @@
     <joint name="artificial_ceiling_to_base" type="fixed">
         <parent link="base_link" />
         <child link="artificial_ceiling" />
-        <origin rpy="0 0 0" xyz="0.0 0.0 2.2" />
+        <origin rpy="0 0 0" xyz="0.0 0.0 2." />
     </joint>
     <link name="artificial_ceiling">
         <collision>
@@ -547,7 +547,7 @@
         <parent link="m_robot_linear_drive_sledge" />
         <child link="m_robot_linear_drive_dof1" />
         <axis xyz="0 0 1" />
-        <limit effort="1" lower="-1.571" upper="1.571" velocity="0.95" />
+        <limit effort="1" lower="-1.571" upper="1.571" velocity="1.571" />
     </joint>
     <link name="m_robot_linear_drive_dof1">
         <inertial>
@@ -575,7 +575,7 @@
         <parent link="m_robot_linear_drive_dof1" />
         <child link="m_robot_linear_drive_dof2" />
         <axis xyz="1 0 0" />
-        <limit effort="1" lower="-1.571" upper="0.0" velocity="0.95" />
+        <limit effort="1" lower="-1.571" upper="0.0" velocity="1.571" />
     </joint>
     <link name="m_robot_linear_drive_dof2">
         <inertial>
@@ -860,5 +860,56 @@
         <parent link="Soft_RG6_finger_2" />
         <child link="realsense_base_link" />
         <origin rpy="0 0 -1.57" xyz="0 0.05 0.1" />
+    </joint>
+
+    <!-- CERTH Camera -->
+    <link name="certh_horizontal_link" >
+        <visual>
+            <geometry>
+                <mesh filename="package://iiwa_description/meshes/certh_camera/CERTH_Camera_Linear_Slide_Mount_Horizontal_Mount.stl" />
+            </geometry>
+            <material name="camera_mat" />
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://iiwa_description/meshes/certh_camera/CERTH_Camera_Linear_Slide_Mount_Horizontal_Mount.stl" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.1" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.03" iyy="0.03" izz="0.03" ixy="0.0" ixz="0.0" iyz="0.0" />
+        </inertial>
+    </link>
+    <joint name="certh_horizontal_joint" type="fixed">
+        <parent link="m_robot_linear_drive_guiderail" />
+        <child link="certh_horizontal_link" />
+        <!--- Change Y to move mount along linear rail (original: -0.019) -->
+        <origin rpy="0 3.1415 3.1415" xyz="-0.0325 -0.19 0" />
+    </joint>
+
+    <link name="certh_vertical_link" >
+        <visual>
+            <geometry>
+                <mesh filename="package://iiwa_description/meshes/certh_camera/CERTH_Camera_Linear_Slide_Vertical.stl" />
+            </geometry>
+            <material name="camera_mat" />
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://iiwa_description/meshes/certh_camera/CERTH_Camera_Linear_Slide_Vertical.stl" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.1" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.03" iyy="0.03" izz="0.03" ixy="0.0" ixz="0.0" iyz="0.0" />
+        </inertial>
+    </link>
+    <joint name="certh_vertical_joint" type="fixed">
+        <parent link="certh_horizontal_link" />
+        <child link="certh_vertical_link" />
+        <!--- Change Z to move vertically-->
+        <origin rpy="3.1415 0 1.571" xyz="0.0325 0.3725 0.12" />
     </joint>
 </robot>
